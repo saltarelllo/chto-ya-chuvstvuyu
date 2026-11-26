@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,19 +24,6 @@
   --font-body:"Inter Display","Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --r:28px;
   color-scheme:light;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0e1015; --surface:#161922; --card:#1f2430;
-    --ink-strong:#f4f6fa; --ink:#dfe3ec; --muted:#8d96a8;
-    --pill-bg:#252d3d; --pill-ink:#dce3f0; --pill-muted:#8e9cb2;
-    --accent:#ff4bc6; --accent-hover:#ff6ad0; --accent-soft:#421b37; --accent-ink:#ffb3e6; --accent-tint:#2b1c2a; --on-accent:#140811;
-    --line:#2a3142; --tab-active-bg:#f4f6fa; --tab-active-ink:#111111;
-    color-scheme:dark;
-  }
-  :root:not([data-theme="light"]) .date-pill{color:var(--accent-ink)}
-  :root:not([data-theme="light"]) .tab[aria-selected="true"] .count{background:rgba(17,17,17,.14)}
-  :root:not([data-theme="light"]) .mbar-go{color:var(--accent)}
 }
 :root[data-theme="dark"]{
   --bg:#0e1015; --surface:#161922; --card:#1f2430;
@@ -545,11 +532,7 @@ function renderToday(){
   if(el) el.textContent=`${pad(d.getDate())}.${pad(d.getMonth()+1)}.${String(d.getFullYear()).slice(-2)}`;
 }
 
-const darkMQ = window.matchMedia("(prefers-color-scheme: dark)");
-const isDark = () => {
-  const t = document.documentElement.dataset.theme;
-  return t ? t === "dark" : darkMQ.matches;
-};
+const isDark = () => document.documentElement.dataset.theme === "dark";
 function syncThemeBtn(){
   const el=$("#themeToggle");
   if(el) el.textContent = isDark() ? "Светлая тема" : "Тёмная тема";
@@ -559,7 +542,6 @@ if(themeBtn) themeBtn.addEventListener("click",()=>{
   document.documentElement.dataset.theme = isDark() ? "light" : "dark";
   syncThemeBtn();
 });
-if(darkMQ.addEventListener) darkMQ.addEventListener("change", syncThemeBtn);
 
 syncThemeBtn(); renderToday(); renderPickers(); renderGrid(); update();
 </script>
